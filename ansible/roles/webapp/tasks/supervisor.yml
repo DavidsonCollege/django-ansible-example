@@ -1,0 +1,12 @@
+- name: install supervisor
+  apt:  pkg=supervisor
+        state=present
+        update_cache=yes
+  become: true
+
+- name: add supervisor site configuration file
+  template: src=supervisor-gunicorn.conf dest=/etc/supervisor/conf.d/gunicorn.conf
+            owner=root group=root mode=644
+  become: true
+  notify:
+    - restart supervisor
